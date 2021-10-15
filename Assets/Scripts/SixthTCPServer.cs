@@ -1,21 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
+using System.Net;          // 문제 발생 - 동작하지 않음
+using System.Net.Sockets;  // 문제 발생 - 동작하지 않음
+using System.Text; 
 using System.Threading;
 using UnityEngine;
-using 
 
 public class SixthTCPServer : MonoBehaviour
 {
     // 통신 변수
     private int m_Port = 50005;
-    private TcpListener m_TcpListener;
+    private TcpListener m_TcpListener; // 문제 발생 - 동작하지 않음
     private List<TcpClient> m_Clients = new List<TcpClient>(new TcpClient[0]);
-    private Thread m_ThrdtcpListener;
-    private TcpClient m_Client;
+    private Thread m_ThrdtcpListener;  
+    private TcpClient m_Client; // 문제 발생 - 동작하지 않음
 
     private string myMessage; // 아이폰에서 받은 메시지 여기에 받음 
 
