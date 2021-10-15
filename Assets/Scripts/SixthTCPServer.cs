@@ -6,11 +6,12 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using UnityEngine;
+using 
 
 public class SixthTCPServer : MonoBehaviour
 {
     // 통신 변수
-    private int m_Port = 50003;
+    private int m_Port = 50005;
     private TcpListener m_TcpListener;
     private List<TcpClient> m_Clients = new List<TcpClient>(new TcpClient[0]);
     private Thread m_ThrdtcpListener;
@@ -19,23 +20,21 @@ public class SixthTCPServer : MonoBehaviour
     private string myMessage; // 아이폰에서 받은 메시지 여기에 받음 
 
     public SkinnedMeshRenderer faceMeshRenderer; // 페이스트래킹 데이터 받아서 적용할 캐릭터의 얼굴
+    //private bool indexSend = true;
 
     [HideInInspector]
     public int characterIndex;
+    
 
 
     void Start()
     {
-        int characterIndex = PlayerPrefs.GetInt("selectedCharacter");
+        characterIndex = 1234;
+        //characterIndex = PlayerPrefs.GetInt("selectedCharacter");
         print(LocalIPAddress()); // 로컬 IP주소 확인 
         m_ThrdtcpListener = new Thread(new ThreadStart(ListenForIncommingRequests));
         m_ThrdtcpListener.IsBackground = true;
         m_ThrdtcpListener.Start(); // 연결 과정시작 
-
-        if (m_Client.Connected)
-        {
-            SendMessage(m_Client, characterIndex.ToString());
-        }
     }
 
     void Update()
@@ -47,8 +46,15 @@ public class SixthTCPServer : MonoBehaviour
                 m_Clients.RemoveAt(i); // 목록에서 제거
 
             else
-                //SendMessage(m_Clients[i], characterIndex.ToString());
+            {
+                //if (indexSend)
+                //{
+                //    SendMessage(m_Clients[i], characterIndex.ToString());
+                //    indexSend = false;
+                //}
+                SendMessage(m_Clients[i], characterIndex.ToString());
                 StartCoroutine(OpenFaceData(myMessage)); // 아이폰에서 받은 데이터 (사용할 형태로)포장풀기
+            }
         }
 
     }
